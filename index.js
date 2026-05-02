@@ -1,8 +1,12 @@
 const express = require("express")
 const app = express();
 
+const notificationRoutes = require('./src/api/routes/notification'
+
+)
 app.use(express.json())
 
+app.use("/api/notifications",notificationRoutes)
 app.get("/", (req, res) => {
     res.send("Notification System Running ")
 });
