@@ -1,9 +1,9 @@
 const express = require('express')
 const { PrismaClient} = require('../../../generated/prisma')
+const { notificationQueue} = require("../../queues/notificationQueue")
 
 const router = express.Router()
 const prisma = new PrismaClient()
-
 
 
 router.post("/", async (req, res) => {
@@ -16,6 +16,10 @@ router.post("/", async (req, res) => {
             message,
         },
     });
+     await notificationQueue.add("Send-notification", {
+        notificationId: notification.id,
+     })
+     
     res.json({
         id: notification.id,
         status: notification.status,
