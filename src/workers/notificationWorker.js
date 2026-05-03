@@ -2,7 +2,8 @@ require("dotenv").config();
 const { Worker} = require("bullmq")
 const { connection } = require("../queues/notificationQueue")
 const { sendEmail} = require("../services/emailService")
-const { PrismaClient} = require('../../generated/prisma')
+const { PrismaClient} = require('../../generated/prisma');
+const { promises } = require("nodemailer/lib/xoauth2");
 
 const prisma = new PrismaClient()
 
@@ -16,14 +17,22 @@ const worker = new Worker(
         });
 
         // Idempotency check
+    const acquired = await prisma.notification.updateMany({
+        where: {
+            id: notificationId,
+            status: "pending", 
+        },
+        data: { status: "processing"}
+    })
 
-    if (notification.status === "sent"  || notification.status === "failed") {
-        console.log("Already sent, skipping", notificationId)
+    if(acquired.count === 0) {
+        console.log("Already processing or sent, skipping",notificationId)
         return;
     }
+    
+    await new Promise(resolve => setTimeout(resolve, 5000)) /* 5 seconds*/
 
  try {
-
     // success update 
 
     await sendEmail({
