@@ -78,10 +78,16 @@ const worker = new Worker(
     console.log("Email sent:", notificationId)
 
 }catch(err) {
+    const isLastAttempt = job.attemptsMade + 1 >= job.opts.attempts
     // failure update
+
     await prisma.notification.update({
         where: {id: notificationId},
-        data: {status:"failed"},
+        data: {
+            status: isLastAttempt ? "failed" :"pending",
+            retryCount: { increment: 1},
+            lastError: err.message,
+        },
     });
 
     throw err;   /*this error is what it needs for bullmq to retry the queue and job logic*/

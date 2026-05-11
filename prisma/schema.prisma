@@ -22,4 +22,6 @@ model Notification {
   status          String      @default("pending")
   createdAt      DateTime    @default(now())
   processedAt    DateTime?
+  retryCount     Int         @default(0)
+  lastError      String?
 }

@@ -8,6 +8,7 @@ const transporter = nodemailer.createTransport({
 });
 
 async function sendEmail({ to, subject, message }) {
+    throw new Error("Forced failure for testing")
     await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to,
