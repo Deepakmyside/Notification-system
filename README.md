@@ -83,6 +83,8 @@ GET /api/notifications/:id
   "createdAt": "2024-01-01T10:00:00Z"
 }
 ```
+## Testing APIs
+Import `postman_collection.json` into Postman to test all endpoints instantly.
 
 **Status values:** `pending` → `processing` → `sent` / `failed`
 
