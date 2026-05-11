@@ -1,7 +1,9 @@
 # Distributed Notification System
 
-A backend system that accepts notification requests via API, queues them in Redis, and processes them asynchronously through BullMQ workers — built to handle failures gracefully with retries, atomic locking, and stuck job recovery.
+🚀 **Live API:** https://notification-system-xd0h.onrender.com 
 
+A backend system that accepts notification requests via API, queues them in Redis, and processes them asynchronously through BullMQ workers — built to handle failures gracefully with retries, atomic locking, and stuck job recovery.
+ 
 ---
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
