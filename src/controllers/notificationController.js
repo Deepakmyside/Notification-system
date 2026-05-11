@@ -5,6 +5,11 @@ const prisma = new PrismaClient()
 
 const createNotificationController = async (req, res) => {
     const { type, message, recipient} = req.body;
+
+    // Input validation 
+    if(!type || !recipient || !message) {
+        return res.status(400).json({message:"All fields required: type, recipient and message"})
+    }
     const notification = await prisma.notification.create({
         data: { type, recipient, message},
     });

@@ -10,7 +10,7 @@ const prisma = new PrismaClient()
 
   //RESCUE Stuck jobs older than 10 minutes
   const rescueStuckJobs = async () => {
-    const tenMinutesAgo = new DataTransfer(Date.now() - 5 * 60 * 1000)
+    const tenMinutesAgo = new Date(Date.now() - 5 * 60 * 1000)
 
     const rescued = await prisma.notification.updateMany({
         where: {
